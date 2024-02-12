@@ -15,7 +15,6 @@ export default function App() {
     try {
       const response = await fetch(URL);
       const data = await response.json();
-
       const newCoords = { longitude: data.longitude, latitude: data.latitude };
       console.log(newCoords);
       setCoords(newCoords);
@@ -26,12 +25,11 @@ export default function App() {
   // setInterval(getISSCoords: () => getISSCoords, ms: 5000 )
 
   useEffect(() => {
-    const myInterval = setInterval(() => {
-      getISSCoords();
-    }, 5000);
-    // setInterval(getISSCoords, 5000);
-    let intervalID;
-    return clearInterval(intervalID);
+    const id = setInterval(getISSCoords, 5000);
+    const cleanup = () => {
+      clearInterval(id);
+    };
+    return cleanup;
   }, []);
   return (
     <main>
